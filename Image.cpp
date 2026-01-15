@@ -28,26 +28,18 @@ int main(){
     
     std::vector<unsigned char> GenImg( width*height*3);
 
-    // for(int i =0,x=0,y=0; i < width*height*3 && x<width*height ;x++){
-    //     if(x > width)x=0,y++;
-    //     GenImg[i++]=R[y][x];
-    //     GenImg[i++]=G[y][x];
-    //     GenImg[i++]=B[y][x];
-    // }
     idx=0;
     for(int y=0 ; y<height ; y++){
         for(int x =0 ; x<width ; x++){
-             GenImg[idx++]=R[y][x];
-             GenImg[idx++]=G[y][x];
-             GenImg[idx++]=B[y][x];
+            if((R[y][x]<150 && R[y][x]>60)&&(G[y][x]<45 && G[y][x]>10)&&(B[y][x]<255 && B[y][x]>150))
+                GenImg[idx++]=255;
+            else
+                GenImg[idx++]=0;    
+
         }
     }
 
-    for(int i =0 ; i< width*height*3; i++){
-        std::cout<<(float)GenImg[i]<<" ";
-    }
-
-    if(stbi_write_png("first.png", width, height, 3,&GenImg[0], width * 3)) {
+    if(stbi_write_png("Gen_test.png", width, height, 1,&GenImg[0], width)) {
         std::cout << "Image saved successfully!\n";
     } else {
         std::cout << "Failed to save image.\n";
